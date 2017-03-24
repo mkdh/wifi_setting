@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
     qDebug() << __func__;
     /*
-
+method 1
     QAndroidJniObject javaNotification = QAndroidJniObject::fromString("QQQ");
     QAndroidJniObject::callStaticMethod<void>("PopUpWiFiSettingPage",
                                        "notify",
@@ -22,23 +22,10 @@ int main(int argc, char *argv[])
                                        javaNotification.object<jstring>());
     */
 
-    //startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-    //http://stackoverflow.com/questions/25024615/open-android-settings-from-qt-appcom-android-settings
-    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");   //activity is valid
-    if ( activity.isValid() )
-    {
-        // Equivalent to Jave code: 'Intent intent = new Intent();'
-        //http://doc.qt.io/qt-5/qandroidjniobject.html#QAndroidJniObject-4
-        QAndroidJniObject intent("android/content/Intent","(I)V", "Settings.ACTION_WIFI_SETTINGS");
-        if ( intent.isValid() )
-        {
-            activity.callObjectMethod("startActivity","(Landroid/content/Intent;)V",intent.object<jobject>());
-        }
-    }
 
 
-    /*method 1
-
+    /*
+method 2
     //startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
     //http://stackoverflow.com/questions/25024615/open-android-settings-from-qt-appcom-android-settings
 
@@ -66,6 +53,21 @@ int main(int argc, char *argv[])
         }
     }
     */
+    //method 3
+
+    //startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+    //http://stackoverflow.com/questions/25024615/open-android-settings-from-qt-appcom-android-settings
+    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");   //activity is valid
+    if ( activity.isValid() )
+    {
+        // Equivalent to Jave code: 'Intent intent = new Intent();'
+        //http://doc.qt.io/qt-5/qandroidjniobject.html#QAndroidJniObject-4
+        QAndroidJniObject intent("android/content/Intent","(I)V", "Settings.ACTION_WIFI_SETTINGS");
+        if ( intent.isValid() )
+        {
+            activity.callObjectMethod("startActivity","(Landroid/content/Intent;)V",intent.object<jobject>());
+        }
+    }
 
     qDebug() << "=======================";
 
