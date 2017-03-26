@@ -53,6 +53,8 @@ method 2
         }
     }
     */
+    
+    /*
     //method 3
 
     //startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
@@ -68,7 +70,14 @@ method 2
             activity.callObjectMethod("startActivity","(Landroid/content/Intent;)V",intent.object<jobject>());
         }
     }
-
+    */
+    
+    // method 4: update frome method 3
+    QAndroidJniObject wifiSettings = QAndroidJniObject::fromString("android.settings.WIFI_SETTINGS");
+    QAndroidJniObject intent("android/content/Intent","(Ljava/lang/String;)V",
+    wifiSettings.object<jstring>());
+    if ( intent.isValid() )
+    QtAndroid::startActivity(intent, 0);
     qDebug() << "=======================";
 
     return app.exec();
