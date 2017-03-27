@@ -1,9 +1,16 @@
 QT += qml quick
-QT += androidextras
+# https://forum.qt.io/topic/60817/qt-android-extras-installation/2
+android { QT += androidextras }
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    qisystemdispatcher.cpp
+
+ios {
+    OBJECTIVE_SOURCES += \
+            appdelegate.mm
+}
 
 RESOURCES += qml.qrc
 
@@ -38,7 +45,9 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
     android/res/drawable/splash.xml \
-    android/res/drawable/icon.png \
-    android/src/PopUpWiFiSettingPage.java
+    android/res/drawable/icon.png
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+HEADERS += \
+    qisystemdispatcher.h
